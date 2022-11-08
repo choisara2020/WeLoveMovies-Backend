@@ -1,5 +1,6 @@
-//require service file
+//require service file and async error boundary
 const service = require("./reviews.service");
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 //delete function and turn review_id into a number if successful send status 204
 async function destroy(req, res) {
@@ -57,7 +58,7 @@ async function readReviews(req, res) {
 }
 
 module.exports = {
-	delete: [validateReviewId, destroy],
-	update: [validateReviewId, update],
+	delete: [asyncErrorBoundary(validateReviewId), asyncErrorBoundary(destroy)],
+	update: [asyncErrorBoundary(validateReviewId), asyncErrorBoundary(update)],
 	readReviews,
 };

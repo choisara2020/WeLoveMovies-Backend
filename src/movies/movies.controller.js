@@ -1,4 +1,5 @@
-//require movies.service file
+//require movies.service file and asyncError boundary
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./movies.service");
 
 //return a list of movies
@@ -30,7 +31,7 @@ async function validateMovieId(req, res, next) {
 
 //REMEMBER TO EXPORT!!!!!!!
 module.exports = {
-	list,
-	read: [validateMovieId, read],
+	list: asyncErrorBoundary(list),
+	read: [asyncErrorBoundary(validateMovieId), asyncErrorBoundary(read)],
 	validateMovieId,
 };

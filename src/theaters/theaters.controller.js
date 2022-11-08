@@ -1,5 +1,6 @@
-//require service
+//require service and async error boundary
 const service = require("./theaters.service");
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 //list of all theaters and movies playing there
 async function list(req, res) {
@@ -10,7 +11,7 @@ async function list(req, res) {
 
 		theater["movies"] = movies;
 	}
-	console.log("line 11");
+	// console.log("line 11");
 	res.json({ data: theaters });
 }
 
@@ -24,5 +25,5 @@ async function listSpecificMovie(req, res, next) {
 
 //export everything!!!
 module.exports = {
-	list: [listSpecificMovie, list],
+	list: [asyncErrorBoundary(listSpecificMovie), asyncErrorBoundary(list)],
 }
