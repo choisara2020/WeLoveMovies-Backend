@@ -7,8 +7,16 @@ const reviewsRouter = require("../reviews/reviews.router");
 const methodNotAllowed = require("../errors/methodNotAllowed");
 
 //routes and controller that validates ID 
+//theaters of a specific movie
 router.use("/:movieId/theaters", controller.validateMovieId, theatersRouter);
+//review of a specific movie
 router.use("/:movieId/reviews", controller.validateMovieId, reviewsRouter);
+
+// /movies/1   or /movies/:movieId
+router
+	.route("/:movieId")
+	.get(controller.read)
+	.all(methodNotAllowed);
 
 // /movies 
 router
@@ -16,10 +24,6 @@ router
 	.get(controller.list)
 	.all(methodNotAllowed);
 
-// /movies/1   or /movies/:movieId
-router
-	.route("/:movieId")
-	.get(controller.read)
-	.all(methodNotAllowed);
+
 
 module.exports = router;
