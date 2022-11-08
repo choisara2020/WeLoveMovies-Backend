@@ -43,7 +43,7 @@ async function update(req, res) {
 	res.json({ data: reviewToReturn });
 }
 
-//readReview function awaits readReviews service. for of loop reviews. await readCritis. join critic with reviews.
+//readReview function awaits readReviews service. for of-loop reviews. await readCritics. join critic with reviews.
 async function readReviews(req, res) {
 	const reviews = await service.readReviews(res.locals.movie.movie_id);
 
